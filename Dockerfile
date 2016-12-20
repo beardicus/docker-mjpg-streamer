@@ -8,7 +8,7 @@ RUN apk add --no-cache --virtual build-tmp git build-base linux-headers libjpeg-
     && make install \
     && apk del build-tmp \
     && cd / \
-    && rm -rf /mjpg-streamer
+    && rm -rf /mjpg-streamer \
     && apk add --no-cache libjpeg-turbo
 
 

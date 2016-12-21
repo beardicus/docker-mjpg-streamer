@@ -30,4 +30,4 @@ EXPOSE 8080
 
 ENTRYPOINT ["mjpg_streamer"]
 
-CMD ["-i", "input_uvc.so", "-o", "output_http.so"]
+CMD ["-i", "input_uvc.so", "-o", "'output_http.so -w /usr/local/share/mjpg-streamer/www/'"]

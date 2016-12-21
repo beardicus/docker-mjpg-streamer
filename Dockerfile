@@ -1,16 +1,26 @@
-FROM alpine:3.4
+FROM debian:jessie
 MAINTAINER Brian Boucheron <brian@boucheron.org>
 
-RUN apk add --no-cache --virtual build-tmp git build-base linux-headers libjpeg-turbo-dev cmake \
+RUN set -ex \
+    && buildDeps=' \
+        git \
+        gcc \
+        g++ \
+        make \
+        cmake \
+        ca-certificates \
+        linux-headers-3.16.0-4-amd64 \
+        libjpeg-dev \
+    ' \
+    && apt-get update && apt-get install -y $buildDeps --no-install-recommends \
+    && rm -rf /var/lib/apt/lists/* \
     && git clone https://github.com/jacksonliam/mjpg-streamer.git \
     && cd /mjpg-streamer/mjpg-streamer-experimental \
     && make \
     && make install \
-    && apk del build-tmp \
     && cd / \
     && rm -rf /mjpg-streamer \
-    && apk add --no-cache libjpeg-turbo
-
+    && apt-get purge -y --auto-remove $buildDeps
 
 EXPOSE 8080
 

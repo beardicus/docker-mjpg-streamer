@@ -10,9 +10,13 @@ RUN set -ex \
         cmake \
         ca-certificates \
         linux-headers-3.16.0-4-amd64 \
-        libjpeg-dev \
+        libjpeg62-turbo-dev \
     ' \
-    && apt-get update && apt-get install -y $buildDeps --no-install-recommends \
+    && runDeps=' \
+        libjpeg62-turbo \
+    ' \
+    && apt-get update \
+    && apt-get install -y $buildDeps $runDeps --no-install-recommends \
     && rm -rf /var/lib/apt/lists/* \
     && git clone https://github.com/jacksonliam/mjpg-streamer.git \
     && cd /mjpg-streamer/mjpg-streamer-experimental \
